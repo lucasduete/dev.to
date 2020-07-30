@@ -11,15 +11,15 @@ canonical_url:
 
 Este trabalho descreve o processo para a especificação de um protocolo para implementação de um sistema de chat utilizando o estilo arquitetural de espaço de dados compartilhado.
 
-![Estilo arquitetônico de espaço de dados compartilhados. Fonte: TANEBAUM, 2007](./assets/img/estilo_arquitetural_fonte_tanebaum.png)
-Estilo arquitetônico de espaço de dados compartilhados. Fonte: TANEBAUM, 2007
+![Estilo arquitetônico de espaço de dados compartilhados. Fonte: TANEBAUM, 2007](./assets/img/estilo_arquitetural_fonte_tanebaum.png)<br />
+Estilo arquitetônico de espaço de dados compartilhados. Fonte: TANEBAUM, 2007<br />
 
 Este espaço de dados compartilhado será chamado de repositório durante este trabalho.
 
 Para este trabalho definiu-se que o repositório seria constituído de dois arquivos com regras específicas como pode ser visto no diagrama abaixo:
 
-![Representação da arquitetura do projeto. Fonte: Autoria Própria, 2018](./assets/img/representacao_arquitetura_projeto.png)
-Representação da arquitetura do projeto. Fonte: Autoria Própria, 2018
+![Representação da arquitetura do projeto. Fonte: Autoria Própria, 2018](./assets/img/representacao_arquitetura_projeto.png)<br />
+Representação da arquitetura do projeto. Fonte: Autoria Própria, 2018<br />
 
 As regras para leitura e escrita de dados são as seguintes:
 
@@ -30,8 +30,8 @@ As regras para leitura e escrita de dados são as seguintes:
 
 Assim o diagrama ficará desta forma:
 
-![Representação da arquitetura do projeto com restrições de leitura e escrita. Fonte: Autoria Própria, 2018](./assets/img/representacao_arquitetura_projeto_restricoes_leitura_e_escrita.png)
-Representação da arquitetura do projeto com restrições de leitura e escrita. Fonte: Autoria Própria, 2018
+![Representação da arquitetura do projeto com restrições de leitura e escrita. Fonte: Autoria Própria, 2018](./assets/img/representacao_arquitetura_projeto_restricoes_leitura_e_escrita.png)<br />
+Representação da arquitetura do projeto com restrições de leitura e escrita. Fonte: Autoria Própria, 2018<br />
 
 Onde N1 e N2 representam o nó 1 e 2 respectivamente e R e W representam _read_(leitura) e _write_(escrita) respectivamente, logo N1W significa que o nó 1 pode escrever neste arquivo.
 
@@ -47,8 +47,8 @@ Tendo definido este cenário surgem alguns problemas:
 
 Ao analisar estes problemas definiu-se que a comunicação entre os nós seria síncrona que, para este projeto, significa dizer que quando um nó enviar uma mensagem este não poderá enviar uma nova mensagem até que o outro nó envie uma mensagem para ele. Com base nessa restrição montou-se o diagrama classes para realiza a comunicação entre os nós:
 
-![Diagrama de classes simples. Fonte: Autoria Própria, 2018](./assets/img/diagrama_classes_simples.png)
-Diagrama de classes simples. Fonte: Autoria Própria, 2018
+![Diagrama de classes simples. Fonte: Autoria Própria, 2018](./assets/img/diagrama_classes_simples.png)<br />
+Diagrama de classes simples. Fonte: Autoria Própria, 2018<br />
 
 Assim **definiu-se que cada arquivo conterá uma lista de objetos do tipo mensagem** e que **será usado apenas os atributos deste objeto para informar o estado atual do sistema**. Ao não utilizar nenhuma estratégia mais complexa espera-se que seja possível portar este repositório para qualquer plataforma sem problemas, por exemplo, esta arquitetura funcionará da mesma forma se utilizar, por exemplo, arquivos no Google Drive, Dropbox, em uma máquina local ou servidor de compartilhamento próprio.
 
@@ -98,19 +98,25 @@ Caso na primeira mensagem ambos os nós lerem ao mesmo tempo o arquivo em que te
 *   Caso o Id da última mensagem do repositório onde o nó pode ler seja igual ao Id da última mensagem enviada pelo nó então este espera um tempo aleatório entre 0 e 10 segundos, após este tempo ele deve ler o arquivo e se não houver novas mensagem este pode enviar sua mensagem, caso os Ids se repitam novamente este processo é refeito.
 *   Caso o Id da última mensagem do repositório onde o nó Caso o Id da última mensagem do repositório onde o nó pode ler seja diferente do Id da última mensagem enviada pelo nó então é considerado a mensagem mais antiga como a primeira mensagem do chat e a outra nova deve aguardar o processamento para que seja reenviada.
 
-![Diagrama de sequência para receber uma mensagem. Fonte: Autoria Própria, 2018](./assets/img/diagrama_sequencia_receber_mensagem.jpeg)
-Diagrama de sequência para receber uma mensagem. Fonte: Autoria Própria, 2018![Diagrama de sequência para enviar uma mensagem. Fonte: Autoria Própria, 2018](./assets/img/diagrama_sequencia_enviar_mensagem.jpeg)
-Diagrama de sequência para enviar uma mensagem. Fonte: Autoria Própria, 2018![Diagrama de sequência para verificar se há novas mensagens. Fonte: Autoria Própria, 2018](./assets/img/diagrama_sequencia_verificar_novas_mensagens.jpeg)
-Diagrama de sequência para verificar se há novas mensagens. Fonte: Autoria Própria, 2018
+![Diagrama de sequência para receber uma mensagem. Fonte: Autoria Própria, 2018](./assets/img/diagrama_sequencia_receber_mensagem.jpeg 'Diagrama de sequência para receber uma mensagem')<br />
+Diagrama de sequência para receber uma mensagem. Fonte: Autoria Própria, 2018<br />
+
+![Diagrama de sequência para enviar uma mensagem. Fonte: Autoria Própria, 2018](./assets/img/diagrama_sequencia_enviar_mensagem.jpeg 'Diagrama de sequência para enviar uma mensagem')<br />
+Diagrama de sequência para enviar uma mensagem. Fonte: Autoria Própria, 2018<br />
+
+![Diagrama de sequência para verificar se há novas mensagens. Fonte: Autoria Própria, 2018](./assets/img/diagrama_sequencia_verificar_novas_mensagens.jpeg 'Diagrama de sequência para verificar se há novas mensagens')<br />
+Diagrama de sequência para verificar se há novas mensagens. Fonte: Autoria Própria, 2018<br />
 
 **7 — Descrever um adaptador para outros protocolo de propósito similar:** A implementação de um adaptador para outro protocolo necessitária de uma reimplementação da interface _ProtocolFacade_, considere o diagrama abaixo:
 
-![Diagrama de Exemplo do padrão Adapter do GoF, Fonte: https://en.wikipedia.org/wiki/Adapter\_pattern](./assets/img/exemplo_patter_adapter_gof.png)
-Diagrama de Exemplo do padrão Adapter do GoF, Fonte: https://en.wikipedia.org/wiki/Adapter\_pattern
+![Diagrama de Exemplo do padrão Adapter do GoF, Fonte: Wikipédia](./assets/img/exemplo_patter_adapter_gof.png 'Diagrama de Exemplo do padrão Adapter do GoF')<br />
+Diagrama de Exemplo do padrão Adapter do GoF, Fonte: https://en.wikipedia.org/wiki/Adapter\_pattern<br />
 
 Neste caso o _Adaptor_ precisaria ter uma referência a um objeto da classe _Protocol_ e implementar novos métodos que serão usados no outro protocolo porém estes método encapsulariam o acesso ao objeto _Protocol_.
 
-Por fim, segue o link para a implementação do protocolo proposto neste trabalho assim como uma implementação de referência para um cliente:
+<p>
+Por fim, segue o link para a implementação do protocolo proposto neste trabalho assim como uma implementação de referência para um cliente:<br/>
 
-*   Implementação do protocolo: [https://github.com/lucasduete/sd-protocol](https://github.com/lucasduete/sd-protocol)
-*   Implementação de um cliente: [https://github.com/lucasduete/sd-protocolclient](https://github.com/lucasduete/sd-protocolclient)
+*   [Implementação do protocolo](https://github.com/lucasduete/sd-protocol)
+*   [Implementação de um cliente](https://github.com/lucasduete/sd-protocolclient)
+</p>
